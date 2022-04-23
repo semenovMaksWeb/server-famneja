@@ -1,5 +1,7 @@
-INSERT INTO component_example (id_component, attr, "style") VALUES
-    ((select id from component where  "name" = 'table'), NULL, {
+INSERT INTO component_example (id_component, class, "style") VALUES
+    ((select id from component where  "name" = 'table'), {
+        "hidden_text_overflow": true
+}, {
         "max_height": "300px",
         "order": 1,
         "margin": "0px 0px 10px 0px",
@@ -34,7 +36,9 @@ INSERT INTO component_example (id_component, attr, "style") VALUES
 }), 
 
     ((select id from component where  "name" = 'container'), NULL, NULL), 
-    ((select id from component where  "name" = 'table'), NULL,{
+    ((select id from component where  "name" = 'table'), {
+        "hidden_text_overflow": true
+},{
        "max_height": "300px",
         "order": 1,
         "margin": "0px 0px 10px 0px",
@@ -70,7 +74,9 @@ INSERT INTO component_example (id_component, attr, "style") VALUES
        "order": 5
 }), 
     ((select id from component where  "name" = 'container'), NULL, NULL), 
-    ((select id from component where  "name" = 'table'), NULL, {
+    ((select id from component where  "name" = 'table'), {
+        "hidden_text_overflow": true
+}, {
        "max_height": "300px",
         "order": 1,
         "margin": "0px 0px 10px 0px",
