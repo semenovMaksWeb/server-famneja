@@ -1,23 +1,93 @@
 INSERT INTO component_example (id_component, attr, "style") VALUES
-    ((select id from component where  "name" = 'table'), NULL, NULL),
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
+    ((select id from component where  "name" = 'table'), NULL, {
+        "max_height": "300px",
+        "order": 1,
+        "margin": "0px 0px 10px 0px",
+        "header":{
+            "text_align": "center"
+        },
+        "body":{
+            "color": "green",
+            "text_align": "center",
+            "height_row": "20px"
+        }
+}),
+    ((select id from component where  "name" = 'button'), NULL, {
+          "margin": "0 auto",
+         "height": "100%"
+}), 
     ((select id from component where  "name" = 'container'), NULL, NULL), 
-    ((select id from component where  "name" = 'form'), NULL, NULL),   
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
+    ((select id from component where  "name" = 'form'), NULL, {
+        "order": 3
+}),   
+    ((select id from component where  "name" = 'button'), NULL, {
+        "order": 2,
+        "color": "red",
+        "bg": "transparent",
+        "border": "1px solid red",
+        "border_radius": "4px"
+}), 
     ((select id from component where  "name" = 'form'), NULL, NULL), 
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
+    ((select id from component where  "name" = 'button'), NULL, {
+      "margin": "0 auto",
+         "height": "100%"
+}), 
+
     ((select id from component where  "name" = 'container'), NULL, NULL), 
-    ((select id from component where  "name" = 'table'), NULL, NULL), 
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
+    ((select id from component where  "name" = 'table'), NULL,{
+       "max_height": "300px",
+        "order": 1,
+        "margin": "0px 0px 10px 0px",
+        "header":{
+            "text_align": "center"
+        },
+        "body":{
+            "color": "green",
+            "text_align": "center",
+            "height_row": "20px"
+        }
+}), 
+      
+    ((select id from component where  "name" = 'button'), NULL, {
+      "margin": "0 auto",
+         "height": "100%"
+}), 
+
+    ((select id from component where  "name" = 'button'), NULL, {
+      "margin": "0 auto",
+         "height": "100%"
+}), 
+    ((select id from component where  "name" = 'button'), NULL, {
+         "order": 2,
+             "color": "red",
+             "bg": "transparent",
+             "border": "1px solid red",
+             "border_radius": "4px"
+     }), 
     ((select id from component where  "name" = 'container'), NULL, NULL), 
-    ((select id from component where  "name" = 'form'), NULL, NULL), 
-    ((select id from component where  "name" = 'form'), NULL, NULL), 
+    ((select id from component where  "name" = 'form'), NULL, { "order": 3}), 
+    ((select id from component where  "name" = 'form'), NULL, {
+       "order": 5
+}), 
     ((select id from component where  "name" = 'container'), NULL, NULL), 
-    ((select id from component where  "name" = 'table'), NULL, NULL),
-    ((select id from component where  "name" = 'form'), NULL, NULL), 
-    ((select id from component where  "name" = 'button'), NULL, NULL), 
+    ((select id from component where  "name" = 'table'), NULL, {
+       "max_height": "300px",
+        "order": 1,
+        "margin": "0px 0px 10px 0px",
+        "header":{
+            "text_align": "center"
+        },
+        "body":{
+            "color": "green",
+            "text_align": "center",
+            "height_row": "20px"
+        }
+}),
+    ((select id from component where  "name" = 'form'), NULL, {"order": 2}), 
+    ((select id from component where  "name" = 'button'), NULL, {
+      "margin": "0 auto",
+         "height": "100%"
+}), 
     ((select id from component where  "name" = 'container'), NULL, NULL), 
 
 INSERT INTO schema_table (id_components, sort, "key", title, button, w)  VALUES
