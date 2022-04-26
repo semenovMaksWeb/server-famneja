@@ -101,7 +101,7 @@ INSERT INTO component_example (id_component, class, "style") VALUES
     ((select id from component where  "name" = 'input'), NULL, NULL),
     ((select id from component where  "name" = 'button'), NULL, {
         "border": "1px solid #000",
-        "border_radius": "4px",
+        "border_radius": "4px"
     }),
     -- форма id-6
     ((select id from component where  "name" = 'fieldset'), NULL, NULL),
@@ -126,6 +126,35 @@ INSERT INTO component_example (id_component, class, "style") VALUES
     ((select id from component where  "name" = 'button'), NULL, {
         "border": "1px solid #000",
         "border_radius": "4px",
+    }),
+    -- форма id-18
+    ((select id from component where  "name" = 'fieldset'), NULL, NULL),
+    ((select id from component where  "name" = 'container'), NULL, {
+        "display": "flex",
+        "align-items": "flex-start"
+    }),
+    ((select id from component where  "name" = 'select'), NULL, NULL),
+    ((select id from component where  "name" = 'button'), NULL, {
+        "border": "1px solid #000",
+        "border_radius": "4px",
+        "height": "20px",
+        "margin": "0 0 0 10px"
+    }),
+    ((select id from component where  "name" = 'rows'), NULL, {
+        "overflow": "auto",
+        'max-height': "300px",
+        "padding": "0 10px 0 0" 
+    }),
+    ((select id from component where  "name" = 'container'), NULL, {
+        "display": "flex"
+    }),
+    ((select id from component where  "name" = 'input'), NULL, NULL),
+    ((select id from component where  "name" = 'input'), NULL, NULL),
+    ((select id from component where  "name" = 'button'), NULL, {
+        "border": "1px solid #000",
+        "border_radius": "4px",
+        "height": "20px",
+        "margin": "0 0 0 10px"
     }),
 
 INSERT INTO schema_table (id_components, sort, "key", title, button, w)  VALUES
