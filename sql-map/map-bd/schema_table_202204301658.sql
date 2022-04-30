@@ -13,4 +13,5 @@ INSERT INTO public.schema_table (id,id_components,sort,"key",title,button,w) VAL
 	 (11,9,false,'update','',11,40),
 	 (12,17,true,'id','id',NULL,40),
 	 (13,17,true,'name','название переменной',NULL,120),
-	 (14,17,true,'value','значение переменной',NULL,120);
+	 (14,17,true,'value','значение переменной',NULL,120),
+	 (16,1,false,'test','тест',NULL,120);
