@@ -1,4 +1,4 @@
-INSERT INTO public.component_example (id,id_component,"class","style") VALUES
+INSERT INTO components.component_example (id,id_component,"class","style") VALUES
 	 (3,3,NULL,NULL),
 	 (6,4,NULL,NULL),
 	 (8,3,NULL,NULL),
@@ -23,7 +23,7 @@ INSERT INTO public.component_example (id,id_component,"class","style") VALUES
       "margin": "0 auto",
          "height": "100%"
 }');
-INSERT INTO public.component_example (id,id_component,"class","style") VALUES
+INSERT INTO components.component_example (id,id_component,"class","style") VALUES
 	 (10,2,NULL,'       {
 "margin": "0 auto",
          "height": "100%"
@@ -93,7 +93,7 @@ INSERT INTO public.component_example (id,id_component,"class","style") VALUES
             "height_row": "20px"
         }
 }');
-INSERT INTO public.component_example (id,id_component,"class","style") VALUES
+INSERT INTO components.component_example (id,id_component,"class","style") VALUES
 	 (21,5,NULL,NULL),
 	 (22,6,NULL,NULL),
 	 (23,6,NULL,NULL),
@@ -110,7 +110,7 @@ INSERT INTO public.component_example (id,id_component,"class","style") VALUES
     }'),
 	 (29,5,NULL,NULL),
 	 (30,6,NULL,NULL);
-INSERT INTO public.component_example (id,id_component,"class","style") VALUES
+INSERT INTO components.component_example (id,id_component,"class","style") VALUES
 	 (31,6,NULL,NULL),
 	 (32,2,NULL,'{
         "border": "1px solid #000",
@@ -136,7 +136,7 @@ INSERT INTO public.component_example (id,id_component,"class","style") VALUES
         "margin": "0 0 0 10px"
         }
         ');
-INSERT INTO public.component_example (id,id_component,"class","style") VALUES
+INSERT INTO components.component_example (id,id_component,"class","style") VALUES
 	 (41,8,NULL,'{
  "border": "1px solid #000",
         "border_radius": "4px",

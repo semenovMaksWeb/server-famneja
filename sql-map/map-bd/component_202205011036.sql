@@ -1,4 +1,4 @@
-INSERT INTO public.component (id,"name",description,active) VALUES
+INSERT INTO components.component (id,"name",description,active) VALUES
 	 (1,'table','Компонент таблица',true),
 	 (2,'button','Компонент кнопка',true),
 	 (3,'container','Компонент контейнер',true),

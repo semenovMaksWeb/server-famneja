@@ -1,4 +1,4 @@
-INSERT INTO public.components_params (id_components,id_params,value,id) VALUES
+INSERT INTO components.components_params (id_components,id_params,value,id) VALUES
 	 (1,3,'true',1),
 	 (1,4,'Темы проектов',2),
 	 (1,6,'id',3),
