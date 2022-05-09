@@ -1,0 +1,6 @@
+components.type_var_get()
+components.component_get_all()
+component_get_name()
+components.component_create()
+components.component_delete()
+components.component_update()
