@@ -83,10 +83,54 @@ $function$
 ;
 
 -- platform
+CREATE OR REPLACE FUNCTION components.screen_platform_get(_id int)
+ RETURNS  TABLE(screen json)
+ LANGUAGE plpgsql
+AS $function$
+	DECLARE
+	id_component_screen int[];
+	id_component_form int[];
+	BEGIN
+	id_component_screen := (select array_agg(ce.id::INT)
+		from components."screen" s 
+		left join components."screen_components" sc on sc.id_screen  = s.id
+		left join components."component_example" ce on ce.id = sc.id_component
+		where s.id  = _id);
+	id_component_form := (select array_agg(sf.id_components)
+		from components."component_example" ce 
+		left join components."schema_form" sf on sf.id_form = ce.id
+		where ce.id = any (id_component_screen) and sf.id_components notnull);   		
+--	главный select
+  return query 
+  select json_build_object(
+	'screen', json_build_object(
+		'id', s.id,
+		'url', s.url
+	),
+	'breadcrumbs', b,
+ 	'components', components."components_platform_get"(array_cat(id_component_screen, id_component_form))
+) screen
+from components."screen" s
+left join (
+	select 
+		b.id_screen,
+		json_agg(
+        	json_build_object(
+            	'name', b."name",
+            	'url', b.url
+        	)
+	) b 
+	from components."breadcrumbs" b
+	group by b.id_screen
+) b on b.id_screen = _id
+where s.id = _id;
+	END;    
+$function$
+;
 CREATE OR REPLACE FUNCTION components.components_platform_get(_id integer[])
  RETURNS TABLE(components json)
  LANGUAGE plpgsql
- AS $function$
+AS $function$
 	BEGIN
         return query
              select 
@@ -102,22 +146,22 @@ CREATE OR REPLACE FUNCTION components.components_platform_get(_id integer[])
 			'schema_table', "schema",
 			'schema_form', schema_form
 			)
-        )  from components.component_example ce
-        left join components.component c on c.id = ce.id_component
+        )  from components."component_example" ce
+        left join components."component" c on c.id = ce.id_component
         left join (
 		select sf.id_form,
  			json_agg(
 				json_build_object(
- --                    'component', component_form,
+--                    'component', component_form,
 					'id_components',sf.id_components,
 					'id_parent', sf.id_parent
 				)
 			) schema_form
-		from components.schema_form sf
- --		join (select * from components_platform_get(sf.id_components)) component_form on ce.id = sf.id_components
+		from components."schema_form" sf
+--		join (select * from components_platform_get(sf.id_components)) component_form on ce.id = sf.id_components
 		group by sf.id_form 
 	    ) sf on sf.id_form = ce.id
- --	    схема таблицы
+--	    схема таблицы
       	left join (
  			select schema_c.id_components,			
 			 json_agg(
@@ -132,7 +176,7 @@ CREATE OR REPLACE FUNCTION components.components_platform_get(_id integer[])
  						)
 				 )
 			) "schema"
- 			from components.schema_table schema_c
+ 			from components."schema_table" schema_c
  			group by schema_c.id_components 
  		)schema_c  on schema_c.id_components = ce.id
         left join (
@@ -143,8 +187,8 @@ CREATE OR REPLACE FUNCTION components.components_platform_get(_id integer[])
                         'id', cc.id,
                         'params', cc.params	
                     )))) component_callback
-            from components.component_callback cc
-            left join  components.event e on e.id = cc.id_event
+            from components."component_callback" cc
+            left join  components."event" e on e.id = cc.id_event
             group by cc.id_component
         ) cc on cc.id_component = ce.id
 			left join (
@@ -152,15 +196,15 @@ CREATE OR REPLACE FUNCTION components.components_platform_get(_id integer[])
 			json_agg(
 					json_build_object(
 					p."name", json_build_object(
- --						'id', p.id,
+--						'id', p.id,
 						'url', cr.url,
 						'value', cp.value,
 						'type', t."name" 	
 					))) params
-			from components.components_params cp  
-			left join components.component_rule cr  on cr.id  = cp.id_params
-			left join components.params p  on p.id  = cr.id_params
-			left join components.typevar t on t.id  = p."type" 
+			from components."components_params" cp  
+			left join components."component_rule" cr  on cr.id  = cp.id_params
+			left join components."params" p  on p.id  = cr.id_params
+			left join components."typevar" t on t.id  = p."type" 
 			group by cp.id_components 
 			)cp on cp.id_components = ce.id 
 	left join (
@@ -182,59 +226,14 @@ CREATE OR REPLACE FUNCTION components.components_platform_get(_id integer[])
 						'type', ef."type",
 						'type_var', t2."name" 
 					)) api_params 
-			from components.component_api_params cap 
-			left join components.element_fd ef ON cap.id_element_fd = ef.id
-			left join components.typevar t2 on t2.id = ef.var_type 
+			from components."component_api_params" cap 
+			left join components."element_fd" ef ON cap.id_element_fd = ef.id
+			left join components."typevar" t2 on t2.id = ef.var_type 
 			group by cap.id_config_api
 		) cap on cap.id_config_api = ca.id
 				group by ca.id_component
 	 ) ca  on ca.id_component = ce.id
    	where ce.id =  ANY (_id);
    	END;    
-$function$
-;
-
-CREATE OR REPLACE FUNCTION components.screen_platform_get(_id int)
- RETURNS  TABLE(screen json)
- LANGUAGE plpgsql
- AS $function$
-	DECLARE
-	id_component_screen int[];
-	id_component_form int[];
-	BEGIN
-	id_component_screen := (select array_agg(ce.id::INT)
-		from components.screen s 
-		left join components.screen_components sc on sc.id_screen  = s.id
-		left join components.component_example ce on ce.id = sc.id_component
-		where s.id  = _id);
-	id_component_form := (select array_agg(sf.id_components)
-		from component_example ce 
-		left join schema_form sf on sf.id_form = ce.id
-		where ce.id = any (id_component_screen) and sf.id_components notnull);   		
- --	главный select
-  return query 
-  select json_build_object(
-	'screen', json_build_object(
-		'id', s.id,
-		'url', s.url
-	),
-	'breadcrumbs', b,
- 	'components', components_platform_get(array_cat(id_component_screen, id_component_form))
-	) screen
-	from components.screen s
-	left join (
-	select 
-		b.id_screen,
-		json_agg(
-        	json_build_object(
-            	'name', b."name",
-            	'url', b.url
-        	)
-	) b 
-	from components.breadcrumbs b
-	group by b.id_screen
-	) b on b.id_screen = _id
-	where s.id = _id;
-	END;    
 $function$
 ;
