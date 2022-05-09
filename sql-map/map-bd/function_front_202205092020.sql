@@ -1,4 +1,4 @@
-INSERT INTO components.function_front (id,"name",description) VALUES
+INSERT INTO components.function_front (id,name,description) VALUES
 	 (4,'api','сделать запрос на бэк'),
 	 (5,'delete_table_row','удалить строки с таблицы'),
 	 (6,'reset_values_form','сбросить значение у всей формы'),

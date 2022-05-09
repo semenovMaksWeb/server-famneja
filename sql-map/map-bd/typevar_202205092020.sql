@@ -1,4 +1,4 @@
-INSERT INTO components.typevar (id,"name") VALUES
+INSERT INTO components.typevar (id,name) VALUES
 	 (1,'int'),
 	 (2,'string'),
 	 (3,'boolean'),
