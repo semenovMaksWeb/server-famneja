@@ -29,9 +29,9 @@ INSERT INTO components.component ("name", description, active) VALUES('input', '
 INSERT INTO components.component ("name", description, active) VALUES('select', 'Компонент выплывающий список (используется в форме)', true);
 INSERT INTO components.component ("name", description, active) VALUES('rows', 'Компонент с дублирующимися элементами (используется в форме)', true);
 
-INSERT INTO tes.rights ("name") VALUES('супер_пользователь');
-INSERT INTO tes.rights ("name") VALUES('конфигуратор');
-INSERT INTO tes.rights ("name") VALUES('разработчик');
+INSERT INTO tes.roles ("name") VALUES('супер_пользователь');
+INSERT INTO tes.roles ("name") VALUES('конфигуратор');
+INSERT INTO tes.roles ("name") VALUES('разработчик');
 
 
 INSERT INTO components.params ("name", req, "type", description) VALUES('name', false, 2, 'имя/заголовок компонента');
