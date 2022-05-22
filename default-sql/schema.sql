@@ -210,7 +210,7 @@ CREATE TABLE components.component (
 	"style" json NULL,
 	id_parent int4 NULL,
 	id_rights int4 NULL,
-	order int4 NULL,
+	"order" int4 NULL,
 	CONSTRAINT component_example_pk PRIMARY KEY (id),
 	CONSTRAINT component_example_fk FOREIGN KEY (id_component) REFERENCES components.component(id),
 	CONSTRAINT component_example_fk_2 FOREIGN KEY (id_parent) REFERENCES components.component_example(id),
