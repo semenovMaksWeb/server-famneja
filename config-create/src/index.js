@@ -100,6 +100,7 @@ async function createComponents(components, id_screen, client){
     const id_ce  = result.rows[0].id
     await createComponentsScreen(id_ce, id_screen, client);
     await checkAndSaveApiComponents(components,id_ce, client);
+    await createParamsComponent(components,id_ce, client);
 
 }
 
@@ -114,6 +115,30 @@ async function configCreate(config){
         }
     }
     await client.end();
+}
+
+async function createParamsComponent(component, id, client){
+    if(component.params){
+        let id_type = await client.query('select  id from components.component c  where c."name" = $1', [component.id_component]);
+        id_type = id_type?.rows[0]?.id;
+        for (const key in component.params) {
+            if (Object.hasOwnProperty.call(component.params, key)) {
+                const value = component.params[key].toString();
+                let id_params = await client.query('select  id from components.params p  where p."name" = $1', [key]);
+                id_params = id_params?.rows[0]?.id;
+                let id_rules = await client.query('select id from components.component_rule cr where cr.id_params = $1 and (cr.id_component = $2 or cr.id_component is null)', [id_params, id_type]);
+                id_rules = id_rules?.rows[0]?.id
+                if(!id_rules){
+                    console.log(`параметр ${key} для ${component.id_component} не найден!`);
+                    continue;
+                }
+                const text = "INSERT INTO components.components_params (id_components, id_params, value) VALUES($1, $2, $3);";
+                const values = [id, id_rules, value];
+                const id_params_components = await client.query(text, values);
+            }
+        }
+ 
+    }
 }
 
 

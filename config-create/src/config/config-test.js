@@ -68,7 +68,15 @@ const table_2 = {
     style: null,
     id_parent: "table_1", //  указывает тэг а не id для получение по ссылки
     id_rights: null, // id права
-    tag: "table_2"
+    tag: "table_2",
+    params:{
+        name: "Таблица 2",
+        title: "компонент",
+        limit: 15,
+        checkbox_td: true,
+        key_main: "uuid"
+
+    }
 }
 
 const config = {
