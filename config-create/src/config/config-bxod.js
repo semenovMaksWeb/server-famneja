@@ -83,7 +83,32 @@ const button_ok  = {
     id_parent: null, //  указывает тэг а не id для получение по ссылки
     id_rights: null, // id права
     tag: "bxod_button_ok",
-    order: 1,
+    order: 3,
+    event:[
+        {
+            id_event: event.click,
+            order: 1,
+            id_callback: callback.api,
+            // сделать строкой и узнать url
+            params:`{
+                "api":{},  
+                "config":{},  
+                "errors":{}  
+            }`
+        },
+        {
+            id_event: event.click,
+            order: 2,
+            id_callback: callback.router_push,
+            // сделать строкой и узнать url
+            params: `{
+                "url": "/"
+            }`
+        },
+        // {
+            // добавить калбек сохраняющий в куки токен пользователя и данные
+        // }
+    ]
 }
 
 
@@ -95,6 +120,11 @@ const input_login  = {
     id_rights: null, // id права
     tag: "bxod_input_login",
     order: 1,
+    params:{
+        val_type: "string",
+        name: "login",
+        title: "Логин"
+    }
 }
 
 const input_password  = {
@@ -105,6 +135,11 @@ const input_password  = {
     id_rights: null, // id права
     tag: "bxod_input_password",
     order: 2,
+    params:{
+        val_type: "string",
+        name: "password",
+        title: "Пароль"
+    }
 }
 
 const  bd = {
@@ -118,7 +153,7 @@ const  bd = {
 const config = {
    bd: bd,
     screen: {
-        url: "/",
+        url: "/bxod",
         id_right: null // или null или id право которое уже есть в бд!
     },
     components: [
