@@ -116,7 +116,7 @@ async function configCreate(config){
     }
     await client.end();
 }
-
+//  генерация параметров у компонента
 async function createParamsComponent(component, id, client){
     if(component.params){
         let id_type = await client.query('select  id from components.component c  where c."name" = $1', [component.id_component]);
@@ -140,7 +140,6 @@ async function createParamsComponent(component, id, client){
  
     }
 }
-
 
 
 (async()=>{

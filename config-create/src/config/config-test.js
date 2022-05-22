@@ -17,6 +17,9 @@ const result = {
     body: "body" 
 }
 
+
+
+
 // изменяемая зона
 
 const  bd = {
