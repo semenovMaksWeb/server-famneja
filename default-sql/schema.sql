@@ -210,12 +210,12 @@ CREATE TABLE components.component_example (
 	"style" json NULL,
 	id_parent int4 NULL,
 	id_rights int4 NULL,
+	tag varchar NULL,
 	CONSTRAINT component_example_pk PRIMARY KEY (id),
 	CONSTRAINT component_example_fk FOREIGN KEY (id_component) REFERENCES components.component(id),
 	CONSTRAINT component_example_fk_2 FOREIGN KEY (id_parent) REFERENCES components.component_example(id),
 	CONSTRAINT component_example_fk_3 FOREIGN KEY (id_rights) REFERENCES tes.rights(id)
 );
-
 
 
 -- components.config_api definition
@@ -387,10 +387,13 @@ CREATE TABLE components.element_fd (
 	"name" varchar NOT NULL,
 	"index" int4 NULL,
 	var_type int4 NULL,
+	id_ce int4 NULL,
 	CONSTRAINT element_fd_pk PRIMARY KEY (id),
 	CONSTRAINT element_fd_result_check CHECK ((((result)::text = 'params'::text) OR ((result)::text = 'body'::text) OR ((result)::text = 'all'::text))),
-	CONSTRAINT element_fd_type_check CHECK ((type = ANY (ARRAY[1, 2, 3, 4])))
+	CONSTRAINT element_fd_type_check CHECK ((type = ANY (ARRAY[1, 2, 3, 4]))),
+	CONSTRAINT element_fd_fk FOREIGN KEY (var_type) REFERENCES handbook.typevar(id)
 );
+
 
 
 -- components.params definition
