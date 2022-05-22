@@ -89,6 +89,35 @@ async function checkAndSaveApiComponents(components, id, client){
         await checkAndSaveApiComponentsParams(components, id_api, client);
     }
 }
+// проверить и сохранить schema_table
+async function checkAndSaveSchemaTable(components, id, client){
+    if(components.schema_table){
+        for (const schema_table of components.schema_table) {
+            let button = null;
+            if(schema_table.button){
+                button = await getIdCompomentsTag(schema_table.button, client);
+            }
+            const text = 'INSERT INTO components.schema_table (id_components, sort, "key", title, button, w, "order") VALUES($1, $2, $3, $4, $5, $6, $7);' 
+            const values = [id, schema_table.sort, schema_table.key, schema_table.title, button, schema_table.w, schema_table.order ]
+            const result = await client.query(text, values);
+        }
+    }
+}
+
+async function checkAndSaveSchemaForm(components, id, client){
+    if(components.schema_form){
+        for (const schema_form of components.schema_form) {
+            if(schema_form.id_parent){
+                schema_form.id_parent = await getIdCompomentsTag(schema_form.id_parent, client);
+            }
+            schema_form.id_components = await getIdCompomentsTag(schema_form.id_components, client);
+            const text = 'INSERT INTO components.schema_form(id_parent,id_form, id_components) VALUES($1, $2, $3);' 
+            const values = [schema_form.id_parent, id, schema_form.id_components ];
+            const result = await client.query(text, values);
+        }
+    }
+}
+
 
 // компонент
 async function createComponents(components, id_screen, client){
@@ -101,6 +130,9 @@ async function createComponents(components, id_screen, client){
     await createComponentsScreen(id_ce, id_screen, client);
     await checkAndSaveApiComponents(components,id_ce, client);
     await createParamsComponent(components,id_ce, client);
+    await createCallback(components, id_ce, client);
+    await checkAndSaveSchemaTable(components, id_ce, client);
+    await checkAndSaveSchemaForm(components, id_ce, client);
 
 }
 
@@ -141,8 +173,43 @@ async function createParamsComponent(component, id, client){
     }
 }
 
+async function findTagParamsConfigCallback(params, client){
+    if(!params){
+        return params;
+    }
+    const req = params.match(/\$tag{.*?}/gi);
+    if (req) {
+        for (const param of req) {
+            const tag = param.slice(5, param.length - 1);
+            const id = await getIdCompomentsTag(tag, client);
+            if(id){
+                params = params.replace(`"${param}"`, id);
+            }else{
+                throw `Ошибка компонент по tag ${tag} не найден`
+            }
+        }
+    }
+    return params;
+}
+
+async function createCallback(component, id, client){
+    if(component.event){
+        for (const event of component.event) {
+            const params = await findTagParamsConfigCallback(event.params, client);
+            const text = 'INSERT INTO components.component_callback (id_callback, params, id_component, id_event, "order") VALUES($1, $2,$3,$4,$5);';
+            const values = [event.id_callback, params, id, event.id_event, event.order];
+            const id_callback = await client.query(text, values);
+        }
+    }
+}
+
+// НИЖЕ ВЫЗОВ!!!!!!!!!! 
+
+
+
+
+
 
 (async()=>{
     await configCreate(config);
 })();
- 
