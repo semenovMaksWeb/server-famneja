@@ -51,6 +51,45 @@ async function checkIdParent(components, client){
     return id_parent;
 }
 
+// сохранить связь id_api и параметры fd
+async function saveApiFdManyToMany(id_api,id_fd,client){
+    const text = 'INSERT INTO components.component_api_params (id_config_api, id_element_fd) VALUES($1, $2) RETURNING id';
+    const values = [id_api, id_fd];
+    const result = await client.query(text, values);
+}
+
+async function checkAndSaveIdCe(id_ce, client){
+    if(id_ce){
+        return getIdCompomentsTag(id_ce, client);
+    }
+    return null;
+}
+
+//  проверить и сохранить параметры api
+async function checkAndSaveApiComponentsParams(components, id_api, client){
+    if(components?.api?.params){
+        for (const params of components.api.params) {
+            const id_ce = await checkAndSaveIdCe(params.id_ce, client);
+            const text = 'INSERT INTO components.element_fd (name_params, result, type, name, index, var_type, id_ce) VALUES($1, $2, $3, $4, $5, $6,$7) RETURNING id';
+            const values = [params.name_params, params.result,  params.type, params.name,params.index,params.var_type, id_ce];
+            const result = await client.query(text, values);
+            const id_fd  = result.rows[0].id;
+            await saveApiFdManyToMany(id_api,id_fd, client)
+        }
+    }
+}
+
+//  проверить и сохранить api
+async function checkAndSaveApiComponents(components, id, client){
+    if(components.api){
+        const text = 'INSERT INTO components.config_api (url, type, id_component) VALUES($1, $2, $3) RETURNING id';
+        const values = [components.api.url, components.api.type, id];
+        const result = await client.query(text, values);
+        const id_api  = result.rows[0].id;
+        await checkAndSaveApiComponentsParams(components, id_api, client);
+    }
+}
+
 // компонент
 async function createComponents(components, id_screen, client){
     const id_parent = await checkIdParent(components, client);
@@ -58,7 +97,10 @@ async function createComponents(components, id_screen, client){
     const text = 'INSERT INTO components.component_example (id_component, "class", "style", id_rights, id_parent, tag) VALUES($1, $2, $3, $4, $5, $6) RETURNING id';
     const values = [id_component, components.class, components.style, components.id_rights, id_parent, components.tag];
     const result = await client.query(text, values);
-    await createComponentsScreen(result.rows[0].id, id_screen, client);
+    const id_ce  = result.rows[0].id
+    await createComponentsScreen(id_ce, id_screen, client);
+    await checkAndSaveApiComponents(components,id_ce, client);
+
 }
 
 // старт
