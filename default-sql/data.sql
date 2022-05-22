@@ -31,10 +31,6 @@ INSERT INTO components.component ("name", description, active) VALUES('rows', '�
 INSERT INTO components.component ("name", description, active) VALUES('ref_button', 'Кнопка которая является ссылкой на другой скрин', true);
 
 
-INSERT INTO tes.roles ("name") VALUES('супер_пользователь');
-INSERT INTO tes.roles ("name") VALUES('конфигуратор');
-INSERT INTO tes.roles ("name") VALUES('разработчик');
-
 
 INSERT INTO components.params ("name", req, "type", description) VALUES('name', false, 2, 'имя/заголовок компонента');
 INSERT INTO components.params ("name", req, "type", description) VALUES('title', false, 2, 'хинт у компонента');
@@ -47,7 +43,10 @@ INSERT INTO components.params ("name", req, "type", description) VALUES('type_ta
 INSERT INTO components.params ("name", req, "type", description) VALUES('limit', false, 1, 'Указывает количество элементов на странице');  
 INSERT INTO components.params ("name", req, "type", description) VALUES('val_type', false, 2, 'Указывает тип переменной');
 INSERT INTO components.params ("name", req, "type", description) VALUES('disable', false, 3, 'Заблокировать компонент');
- 
+INSERT INTO components.params ("name", req, "type", description) VALUES('url_adress', true, 2, 'Адрес url куда будет перенаправлен пользователь');
+
+
+
 INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(1, NULL, NULL, true);
 INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(2, NULL, NULL, true);
 INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(3, NULL, NULL, true);
@@ -60,3 +59,35 @@ INSERT INTO components.component_rule (id_params, id_component, url, "default") 
 INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(10, 6, NULL, false);
 INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(11, 6, NULL, false);
 INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(11, 7, NULL, false);
+INSERT INTO components.component_rule (id_params, id_component, url, "default") VALUES(12, 9, NULL, false);
+
+
+
+INSERT INTO tes.roles ("name") VALUES('супер_пользователь');
+INSERT INTO tes.roles ("name") VALUES('конфигуратор');
+INSERT INTO tes.roles ("name") VALUES('разработчик');
+INSERT INTO tes.roles ("name") VALUES('пользователь');  
+INSERT INTO tes.roles ("name") VALUES('администратор');
+
+
+INSERT INTO tes.rights ("name") VALUES('авторизованный пользователь');
+INSERT INTO tes.rights ("name") VALUES('просмотр прав и ролей');
+INSERT INTO tes.rights ("name") VALUES('редактирование прав и ролей');
+INSERT INTO tes.rights ("name") VALUES('просмотр пользователей');
+INSERT INTO tes.rights ("name") VALUES('бан и разбан пользователей');
+INSERT INTO tes.rights ("name") VALUES('просмотр ролей у пользователей');
+INSERT INTO tes.rights ("name") VALUES('редактировать ролей у пользователей');
+INSERT INTO tes.rights ("name") VALUES('конфигурирование компонентов');
+INSERT INTO tes.rights ("name") VALUES('разработка правил для компонентов');
+
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(4, 1);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(3, 8);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(3, 9);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(2, 8);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(5, 5);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(5, 4);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(5, 6);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(6, 2);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(6, 3);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(6, 6);
+INSERT INTO tes.roles_rights (id_roles, id_rights) VALUES(6, 7);
