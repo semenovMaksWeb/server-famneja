@@ -1,4 +1,4 @@
-const config = require('./config/config-test');
+const config = require('./config/config-bxod');
 
 // получить фул бд
 function PollBd(bd){

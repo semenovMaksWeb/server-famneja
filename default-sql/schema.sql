@@ -65,14 +65,6 @@ CREATE TABLE tes.roles (
 
 -- DROP TABLE tes."token";
 
-CREATE TABLE tes."token" (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	value uuid NOT NULL DEFAULT uuid_generate_v4(),
-	active bool NULL DEFAULT true,
-	"date" timestamp NOT NULL DEFAULT (now() + '2 days'::interval day),
-	CONSTRAINT token_pk PRIMARY KEY (id),
-	CONSTRAINT token_value_key UNIQUE (value)
-);
 
 
 -- tes."user" definition
@@ -111,21 +103,17 @@ CREATE TABLE tes.roles_rights (
 	CONSTRAINT roles_rights_fk_1 FOREIGN KEY (id_rights) REFERENCES tes.rights(id)
 );
 
-
--- tes.token_user definition
-
--- Drop table
-
--- DROP TABLE tes.token_user;
-
-CREATE TABLE tes.token_user (
+CREATE TABLE tes."token" (
 	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	id_token int4 NOT NULL,
+	value uuid NOT NULL DEFAULT uuid_generate_v4(),
+	active bool NULL DEFAULT true,
+	"date" timestamp NOT NULL DEFAULT (now() + '2 days'::interval day),
 	id_user int4 NULL,
-	CONSTRAINT token_user_pk PRIMARY KEY (id),
-	CONSTRAINT token_use1r_fk FOREIGN KEY (id_user) REFERENCES tes."user"(id),
-	CONSTRAINT token_user_fk FOREIGN KEY (id_token) REFERENCES tes."token"(id)
+	CONSTRAINT token_pk PRIMARY KEY (id),
+	CONSTRAINT token_value_key UNIQUE (value),
+	CONSTRAINT token_fk FOREIGN KEY (id_user) REFERENCES tes."user"(id)
 );
+
 
 
 -- tes.user_roles definition
