@@ -1,0 +1,4 @@
+{"screen" : {"id" : 12, "url" : "/admin/component/type"}, "breadcrumbs" : [{"name" : "админ", "url" : "/admin", "order" : 2}, {"name" : "главная", "url" : "/", "order" : 1}, {"name" : "типы компонентов", "url" : "/admin/component/type", "order" : 4}, {"name" : "компоненты", "url" : "/admin/component", "order" : 3}], 
+
+"components" : null
+}
